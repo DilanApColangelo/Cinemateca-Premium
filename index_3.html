@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinemateca - Recomendações Especiais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e4e4e4;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-size: 3em;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #a8dadc;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 20px 0;
+        }
+
+        .movie-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.1);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
+
+        .movie-content {
+            padding: 30px;
+        }
+
+        .movie-title {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .movie-info {
+            margin-bottom: 20px;
+        }
+
+        .info-label {
+            color: #4ecdc4;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .info-content {
+            color: #d4d4d4;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .synopsis {
+            color: #b8b8b8;
+            margin: 20px 0;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .trailer-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9em;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .trailer-btn:hover {
+            background: linear-gradient(135deg, #ee5a6f, #ff6b6b);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            color: #a8dadc;
+            font-size: 0.95em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .movies-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .movie-poster {
+                height: 350px;
+            }
+
+            .movie-title {
+                font-size: 1.5em;
+            }
+
+            .movie-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            header {
+                padding: 25px 15px;
+                margin-bottom: 30px;
+            }
+
+            header h1 {
+                font-size: 1.6em;
+            }
+
+            .movie-poster {
+                height: 300px;
+            }
+
+            .trailer-btn {
+                padding: 12px 25px;
+                font-size: 0.85em;
+            }
+
+            .category-badge {
+                font-size: 0.75em;
+                padding: 6px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎬 Cinemateca Premium</h1>
+        <p>Seleção exclusiva de obras cinematográficas imperdíveis</p>
+    </header>
+
+    <div class="container">
+        <div class="movies-grid">
+            
+            <!-- Filme 1: À Espera de um Milagre -->
+            <article class="movie-card">
+                <div class="movie-poster">
+                    <img src="espera_de_um_milagre.png" alt="Poster de À Espera de um Milagre">
+                    <span class="category-badge">Drama</span>
+                </div>
+                <div class="movie-content">
+                    <h2 class="movie-title">À Espera de um Milagre</h2>
+                    
+                    <div class="movie-info">
+                        <span class="info-label">Diretor</span>
+                        <p class="info-content">Frank Darabont</p>
+                    </div>
+
+                    <div class="movie-info">
+                        <span class="info-label">Elenco Principal</span>
+                        <p class="info-content">Tom Hanks, Michael Clarke Duncan, David Morse</p>
+                    </div>
+
+                    <div class="movie-info">
+                        <span class="info-label">Sinopse</span>
+                        <p class="synopsis">
+                            1935, no corredor da morte de uma prisão sulista. Paul Edgecomb (Tom Hanks) é o chefe de guarda 
+                            da prisão, que tem John Coffey (Michael Clarke Duncan) como um de seus prisioneiros. Aos poucos, 
+                            desenvolve-se entre eles uma relação incomum, baseada na descoberta de que o prisioneiro possui 
+                            um dom mágico que é, ao mesmo tempo, misterioso e milagroso.
+                        </p>
+                    </div>
+
+                    <a href="https://youtu.be/EIc_wJtm6AU?si=o7mJTVdeflnM39jM" target="_blank" class="trailer-btn">
+                        ▶ Assistir Trailer
+                    </a>
+                </div>
+            </article>
+
+            <!-- Filme 2: Missão Impossível - O Acerto Final -->
+            <article class="movie-card">
+                <div class="movie-poster">
+                    <img src="missao_impossivel.jpeg" alt="Poster de Missão Impossível: O Acerto Final">
+                    <span class="category-badge">Suspense / Ação</span>
+                </div>
+                <div class="movie-content">
+                    <h2 class="movie-title">Missão Impossível: O Acerto Final</h2>
+                    
+                    <div class="movie-info">
+                        <span class="info-label">Diretor</span>
+                        <p class="info-content">Christopher McQuarrie</p>
+                    </div>
+
+                    <div class="movie-info">
+                        <span class="info-label">Elenco Principal</span>
+                        <p class="info-content">Tom Cruise, Hayley Atwell, Ving Rhames</p>
+                    </div>
+
+                    <div class="movie-info">
+                        <span class="info-label">Sinopse</span>
+                        <p class="synopsis">
+                            No novo filme Missão Impossível - O Acerto Final, Ethan Hunt (Tom Cruise) é acompanhado, 
+                            pela oitava vez, nos acontecimentos que sucederam a missão dela ao lado da sua tripulação 
+                            do FMI para impedir as consequências trágicas de uma nova ameaça inimaginável: a Inteligência 
+                            Artificial no sistema global de computadores. Tendo a certeza de que nossas vidas são definidas 
+                            pela soma das nossas escolhas, Ethan continua sua busca pela entidade responsável, mas acaba 
+                            se deparando com grandes governantes poderosos ao redor do mundo que utilizam a tecnologia 
+                            para dominar e oprimir centenas de pessoas.
+                        </p>
+                    </div>
+
+                    <a href="https://youtu.be/uo1GEL7pVRk?si=kV-oUaOiPgU7COb3" target="_blank" class="trailer-btn">
+                        ▶ Assistir Trailer
+                    </a>
+                </div>
+            </article>
+
+            <!-- Filme 3: Gente Grande -->
+            <article class="movie-card">
+                <div class="movie-poster">
+                    <img src="gente_grande.jpg" alt="Poster de Gente Grande">
+                    <span class="category-badge">Comédia</span>
+                </div>
+                <div class="movie-content">
+                    <h2 class="movie-title">Gente Grande</h2>
+                    
+                    <div class="movie-info">
+                        <span class="info-label">Diretor</span>
+                        <p class="info-content">Dennis Dugan</p>
+                    </div>
+
+                    <div class="movie-info">
+                        <span class="info-label">Elenco Principal</span>
+                        <p class="info-content">Adam Sandler, Kevin James, Chris Rock</p>
+                    </div>
+
+                    <div class="movie-info">
+                        <span class="info-label">Sinopse</span>
+                        <p class="synopsis">
+                            Em Gente Grande, Lenny (Adam Sandler), Kurt (Chris Rock), Eric (Kevin James), Marcus (David Spade) 
+                            e Rob (Rob Schneider) se conhecem desde pequenos. Passados trinta anos, os cinco amigos se 
+                            reencontram para curtir um fim de semana juntos com as respectivas famílias, mas o feriado de 
+                            4 de Julho em uma casa no lago promete muito mais diversão do que apenas lembranças dos bons 
+                            momentos. Casados e com várias crianças, os homens de família terão de confrontar o fato de 
+                            não serem mais tão jovens.
+                        </p>
+                    </div>
+
+                    <a href="https://youtu.be/HKVve_VSz58?si=y9mmY5JGbl5PsW84" target="_blank" class="trailer-btn">
+                        ▶ Assistir Trailer
+                    </a>
+                </div>
+            </article>
+
+            <!-- Filme 4: Star Trek Into Darkness -->
+            <article class="movie-card">
+                <div class="movie-poster">
+                    <img src="star_trek.jpg" alt="Poster de Star Trek Into Darkness">
+                    <span class="category-badge">Ficção Científica</span>
+                </div>
+                <div class="movie-content">
+                    <h2 class="movie-title">Star Trek Into Darkness</h2>
+                    
+                    <div class="movie-info">
+                        <span class="info-label">Diretor</span>
+                        <p class="info-content">J.J. Abrams</p>
+                    </div>
+
+                    <div class="movie-info">
+                        <span class="info-label">Elenco Principal</span>
+                        <p class="info-content">Chris Pine, Zachary Quinto, Eric Bana</p>
+                    </div>
+
+                    <div class="movie-info">
+                        <span class="info-label">Sinopse</span>
+                        <p class="synopsis">
+                            James Tiberious Kirk (Chris Pine) é um jovem rebelde inconformado com a morte de seu pai. 
+                            Certo dia, recebe convite para fazer parte da formação de novos cadetes para a Frota Estelar. 
+                            Uma vez lá conhece Spock (Zachary Quinto), um vulcano que optou por deixar seu planeta porque 
+                            é metade humano e discordava do preconceito. Durante o treinamento, e também na primeira missão, 
+                            os dois vivenciam novas experiências provocadas por seus estilos diametralmente opostos. Assim, 
+                            Spock, o cerebral, e Kirk, o passional, viverão uma grande aventura ao lado de outros tradicionais 
+                            integrantes da tripulação da U.S.S. Enterprise, a mais avançada nave espacial da época.
+                        </p>
+                    </div>
+
+                    <a href="https://youtu.be/NdIhDMt67Yg?si=d3ISMCNzLsNEtuf6" target="_blank" class="trailer-btn">
+                        ▶ Assistir Trailer
+                    </a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>🎥 Cinemateca Premium - Sua porta de entrada para o melhor do cinema</p>
+        <p>Desenvolvido com paixão por cinema | 2025</p>
+    </footer>
+</body>
+</html>
